@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片上传</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <style>
+        img{
+            width: 150px;
+          
+        }
+    </style>
+</head>
+<body>
+
+        <input type="file" id="imagelist">
+  
+
+        <button onclick="Req_ajax()" > 上传</button>
+        <div class="error"></div>
+        <img src="" alt="">
+<script>
+    var OL_Action_Root = 'http://10.9.62.168:3000';
+function Req_ajax(){           
+    // console.log($("#imagelist"))
+    let  file=$("#imagelist")[0].files[0] //在文件域中选中的图片
+    var formData = new FormData()  //创建一个空的formdata对象
+    formData.append('srcimg',file)    
+    $.ajax({
+        url: OL_Action_Root+'/admin/img',
+        type: 'POST',
+        data: formData,
+        cache: false, //图片上传不要缓存
+        contentType: false,// josn  urlecode
+        processData: false,// 不需要jq进行默认格式处理
+        success: function(data){
+          
+            if(data.err==0){
+                let imgUrl=  OL_Action_Root+data.data
+               $('img').attr('src',imgUrl)
+            }else{
+                alert(data.msg)
+            }
+            console.log(data)
+        }
+           
+    });
+   }
+</script>
+</body>
+</html>
