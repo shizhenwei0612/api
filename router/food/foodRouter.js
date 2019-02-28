@@ -73,7 +73,7 @@ router.post('/getFoodByPage',(req,res)=>{
     })
     //通过分页获取到lists信息返回前端
     .then((data)=>{
-     console.log(data)
+    //  console.log(data)
      result.lists=data;//lists 查询到的数据信息列表
      res.send({err:0,msg:'查询成功',result})//返回result获取总条数
     })
@@ -122,5 +122,22 @@ router.post('/delFood',(req,res)=>{
         utils.log(err)
         res.send({err:0,msg:'删除失败'})
   })
+})
+//批量删除
+router.post('/datadelFood',(req,res)=>{
+    let {arrayId}= req.body
+    console.log(arrayId)
+    arrayId.forEach((item,index) => {
+        console.log(item)
+        foodModel.deleteMany({_id:item})
+        .then((data)=>{
+        // console.log(data)
+        res.send({err:0,msg:"删除成功",data:data})
+        })
+        .catch((err)=>{
+            console.log(err)
+        res.send({err:-1,msg:"删除失败"})
+        })
+    });   
 })
 module.exports=router

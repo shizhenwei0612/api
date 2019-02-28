@@ -23,7 +23,9 @@
 <link href="lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
 <style>
     img{
-        width: 300px;
+		display: block;
+		width: 300px;
+		margin: 0 auto;
     }
 </style>
 </head>
@@ -73,7 +75,8 @@
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="file" class="input-text" value="0" placeholder="" id="imagelist" name="">
             </div>
-            <button onclick="uploadImg()">上传图片</button>
+			<button onclick="uploadImg()">上传图片</button>
+			<div style="height:20px"></div>
             <img src="" alt="">
 		</div>
 

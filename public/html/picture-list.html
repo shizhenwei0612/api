@@ -33,7 +33,7 @@
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20">
 		 <span class="l">
-			 <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius">
+			 <a href="javascript:;" onclick="dataManydel()" class="btn btn-danger radius">
 				<i class="Hui-iconfont">&#xe6e2;</i>
 				 批量删除</a>
 			<a class="btn btn-primary radius" onclick="picture_add('添加食物','picture-add.html')" href="javascript:;">
@@ -45,7 +45,7 @@
 		<table class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
 				<tr class="text-c">
-					<th width="40"><input name="" type="checkbox" value=""></th>
+					<th width="40"><input name="" id='selectall' type="checkbox" value=""></th>
 					<th width="80">ID</th>
 					<th width="100">分类</th>
 					<th width="100">图片</th>
@@ -88,7 +88,7 @@
 //查看的时候要在localhost下打开
 let rootPath='http://10.9.62.168:3000' ;
 let page=1; 
-let pageSize=1;
+let pageSize=2;
 let count=0;//总数
 let nowPage=1;//当前页
 let token=localStorage.getItem('token') 
@@ -106,7 +106,7 @@ function jumpPage(type){
 		break;
 		case 'next':
 		// 下一页 当前+1
-		page=nowPage+1
+		page=Number(nowPage+1)
 		if(page>Math.ceil(count/pageSize)){return false};
 		break;
 		case 'prev':
@@ -115,7 +115,7 @@ function jumpPage(type){
 		break;
 		case 'jump':
 		// 跳转到指定页
-		page=$('#jumpage').val()
+		page=Number($('#jumpage').val())
 		if(page>Math.ceil(count/pageSize)){return false};
 		break;
 	}
@@ -139,7 +139,7 @@ function  rendList(data){
 	for(let index=0;index<data.length;index++){
 	 
 		let tmp=`<tr class="text-c">
-					<td><input name="" type="checkbox" value=""></td>
+					<td><input name="" id="checkboxSelect" data-id="${data[index]._id}"  type="checkbox" value=""></td>
 					<td>${data[index]._id}</td>
 					<td>${data[index].type}</td>
 					<td>
@@ -216,6 +216,32 @@ function picture_del(obj,id){
 			}
 		})
       })
+}
+/*-----------------批量删除----------------*/
+function dataManydel(){
+	layer.confirm('确认要删除吗？',function(index){
+	// console.log($(checkboxSelect))
+				let arrayId = [];
+				$(checkboxSelect).each(function(index,element){
+					if(element.checked == true){
+							let _id = $(element).attr("data-id");
+							arrayId.push(_id)	
+							console.log(arrayId)	
+					}
+				});
+				if(arrayId[0] == null) return false;
+		
+				$.post(rootPath+'/admin/datadelFood',{arrayId:arrayId,token:token},function(res){
+				if(res.err==0){
+					layer.msg('已删除!',{icon:1,time:1000});//确认弹框	
+					location.reload();
+				}else{
+					layer.msg(res.msg,{icon:1,time:1000});//确认弹框
+				}
+			})
+		})
+	arrayId = [];
+	  // if($(#checkboxSelect))
 }
 </script>
 </body>
