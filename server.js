@@ -19,10 +19,10 @@ const  adminUpload=require('./router/upload/uploadRouter')
 app.use('/admin',adminUpload)
 //后台食物系统操作
 const  adminFood=require('./router/food/foodRouter')
-app.use('/admin',adminFood)
+app.use('/admin',utils.verify,adminFood)
 //商品管理操作
 const  adminMd=require('./router/md/mdRouter')
-app.use('/admin',adminMd)
+app.use('/admin',utils.verify,adminMd)
 //监听服务器端口
 app.listen(3000,()=>{    
     console.log('服务器启动 prot：'+3000)

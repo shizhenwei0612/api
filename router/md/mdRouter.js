@@ -22,8 +22,8 @@ router.post('/addMd',(req,res)=>{
 router.post('/getMdByKw',(req,res)=>{
     let{keyword}=req.body;
     let reg =new RegExp(keyword); 
-    // mdModel.find({name:{$regex:reg}}) //通过关键字查询到数据
-    mdModel.find({$or:[{name:{$regex:reg}},{desc:{$regex:reg}}]})//模糊查询  //前端input框 按钮   通过按钮掉接口  //或者失去焦点触发Ajax请求 
+    // mdModel.find({type:{$regex:reg}}) //通过关键字查询到数据
+    mdModel.find({$or:[{type:{$regex:reg}},{salesman:{$regex:reg}}]})//模糊查询  //前端input框 按钮   通过按钮掉接口  //或者失去焦点触发Ajax请求 
     .then((data)=>{
         utils.log(data)
       res.send({err:0,msg:'查询成功',data:data})
@@ -110,5 +110,22 @@ router.post('/delMd',(req,res)=>{
         utils.log(err)
         res.send({err:0,msg:'删除失败'})
   })
+})
+//批量删除
+router.post('/datadelMd',(req,res)=>{
+    let {arrayId}= req.body
+    console.log(arrayId)
+    arrayId.forEach((item,index) => {
+        console.log(item)
+        mdModel.deleteMany({_id:item})
+        .then((data)=>{
+        // console.log(data)
+        res.send({err:0,msg:"删除成功",data:data})
+        })
+        .catch((err)=>{
+            console.log(err)
+        res.send({err:-1,msg:"删除失败"})
+        })
+    });   
 })
 module.exports=router

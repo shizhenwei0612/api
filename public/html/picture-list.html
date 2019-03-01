@@ -20,6 +20,20 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>图片列表</title>
+<style>
+  .text-l a{
+	  display: inline-block;
+	  width:100px;
+	  text-align: center;
+	  margin-left: 20px;
+  }
+  .fenye{
+	  margin: 20px 20px 20px 500px;
+  }
+  #jumpage{
+	  width:30px;
+  }
+</style>
 </head>
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 食品管理 <span class="c-gray en">&gt;</span> 食品列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
@@ -40,7 +54,7 @@
 				<i class="Hui-iconfont">&#xe600;</i>
 				 添加图片</a>
 				</span>
-				<span class="r">共有数据：<strong>54</strong> 条</span> </div>
+				<span class="r">共有数据：<strong></strong> 条</span> </div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
@@ -126,6 +140,7 @@ function jumpPage(type){
 	  $('#uPage').text(nowPage)
 	  //获取分页之后的数据
 	  count=res.result.count;
+	  $('.r strong').text(count)
 	  $('#uCount').text(Math.ceil(count/pageSize))
 	  rendList(res.result.lists)
 	})

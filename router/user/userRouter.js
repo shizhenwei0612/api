@@ -4,6 +4,7 @@ const router=express.Router();
 const userModel=require('../../db/model/userModel');
 const utils=require('../../util/util')
 const jsonWebToken=require('../../module/jwt')
+const mail=require('../../module/mail')
 //用户注册逻辑
 router.post('/reg',(req,res)=>{
   //获取用户输入的数据
@@ -59,6 +60,21 @@ router.post('/test',(req,res)=>{
   .catch(()=>{
     utils.sendRes(res,-999,'token 验证失败请重新登录')
   })
-
+})
+router.post('/getEmailCode',(req,res)=>{
+  let {email}=req.body
+  // let email=req.body.email
+  let code=parseInt((Math.random()*9+1)*100000)
+  // 邮箱记录 数据库 
+  // checks[email]=code
+  // mail.send(email,code)
+  .then(()=>{
+      res.send({err:0,msg:'获取验证码ok'})
+      start=Date.now();
+      console.log(start)
+  })
+  .catch(()=>{
+      res.send({err:-1,msg:'获取验证码失败'})
+  })
 })
 module.exports=router

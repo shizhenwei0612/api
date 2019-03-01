@@ -42,8 +42,8 @@
 		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })" id="logmin" class="input-text Wdate" style="width:120px;">
 		-
 		<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d' })" id="logmax" class="input-text Wdate" style="width:120px;">
-		<input type="text" name="" id="" placeholder="订单" style="width:150px" class="input-text">
-		<button name="" id="btn" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜订单</button>
+		<input type="text" name="" id="keyword" placeholder="订单" style="width:150px" class="input-text">
+		<button name="" onclick="searchMd()" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜订单</button>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20">
 		 <span class="l">
@@ -54,7 +54,7 @@
 				<i class="Hui-iconfont">&#xe600;</i>
 				 添加订单</a>
 				</span>
-				<span class="r">共有数据：<strong>54</strong> 条</span> </div>
+				<span class="r">共有数据：<strong></strong> 条</span> </div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
@@ -137,17 +137,18 @@ function jumpPage(type){
 	$.post(rootPath+'/admin/getMdByPage',{page,pageSize,token},(res)=>{
 		if(res.err!==0) { return false};
 		// console.log(res);
-	  nowPage=page; //数据请求成功后更新当前页
-	  $('#uPage').text(nowPage)
-	  //获取分页之后的数据
-	  count=res.result.count;
-	  $('#uCount').text(Math.ceil(count/pageSize))
-	  rendList(res.result.lists)
-	})
+			nowPage=page; //数据请求成功后更新当前页
+			$('#uPage').text(nowPage)
+			//获取分页之后的数据
+			count=res.result.count;
+			$('.r strong').text(count)
+			$('#uCount').text(Math.ceil(count/pageSize))
+			rendList(res.result.lists)
+})
 }
+
 // 初始化首页数据
 jumpPage('start')
-
 //渲染数据表格
 function  rendList(data){
 	let list='';
@@ -204,8 +205,24 @@ function picture_show(title,url,id){
 	});
 	layer.full(index);
 }
-
-
+//关键字查询
+function searchMd(type){
+	  let data={
+		keyword:$('#keyword').val(),
+        token:token
+	  }
+  $.post(rootPath+'/admin/getMdByKw',data,(res)=>{
+	if(res.err!==0) { return false};
+	console.log(res)
+	nowPage=page; //数据请求成功后更新当前页
+	$('#uPage').text(nowPage)
+	//获取分页之后的数据
+	count=(res.data).length;
+	$('.r strong').text(count)
+	$('#uCount').text(Math.ceil(count/pageSize))
+	rendList(res.data)
+  })
+}
 /*图片-编辑*/
 function picture_edit(title,url,id){
 	localStorage.setItem('_id',id)//将id放到localStorage之中目的是跨页面传参   key值 value值
@@ -259,6 +276,7 @@ function dataManydel(){
 	arrayId = [];
 	  // if($(#checkboxSelect))
 }
+
 </script>
 </body>
 </html>
