@@ -51,7 +51,7 @@
 					<ul class="dropDown-menu menu radius box-shadow">
 						<li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
 						<li><a href="#">切换账户</a></li>
-						<li><a href="#">退出</a></li>
+						<li><a href="#"onClick="quit()">退出</a></li>
 				</ul>
 			</li>
 				<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
@@ -195,7 +195,13 @@ function product_add(title,url){
 function member_add(title,url,w,h){
 	layer_show(title,url,w,h);
 }
-
+//退出
+// let rootPath='http://10.9.62.168:3000'
+// let token=localStorage.getItem('token') 
+// function quit(){
+// 	localStorage.clear();
+// 	location.href=rootPath+'login.html'
+// }
 </script> 
 <!--此乃百度统计代码，请自行删除-->
 <script>

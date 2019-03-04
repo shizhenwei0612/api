@@ -104,6 +104,10 @@ function  btn_login(){
 //获取验证码
 $('.feachBtn').click(function() {
     let count = 60;
+    let data={
+      email:$('#name').val(),
+      code:$('#code').val()
+    }
     const countDown = setInterval(() => {
       if (count === 0) {
        $('.feachBtn').text('重新发送').removeAttr('disabled');
@@ -122,6 +126,9 @@ $('.feachBtn').click(function() {
       }
       count--;
      }, 1000);
+     $.post(rootPath+'/admin/getEmailCode',data,(res)=>{
+             console.log(res)
+     })
     })
 </script>
 <!-- 此乃百度统计代码，请自行删除 -->

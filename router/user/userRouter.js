@@ -5,6 +5,9 @@ const userModel=require('../../db/model/userModel');
 const utils=require('../../util/util')
 const jsonWebToken=require('../../module/jwt')
 const mail=require('../../module/mail')
+let checks={} //保存账号和验证码 //redis memache
+let start;
+let   end;
 //用户注册逻辑
 router.post('/reg',(req,res)=>{
   //获取用户输入的数据
@@ -66,12 +69,13 @@ router.post('/getEmailCode',(req,res)=>{
   // let email=req.body.email
   let code=parseInt((Math.random()*9+1)*100000)
   // 邮箱记录 数据库 
-  // checks[email]=code
-  // mail.send(email,code)
-  .then(()=>{
-      res.send({err:0,msg:'获取验证码ok'})
-      start=Date.now();
-      console.log(start)
+  checks[email]=code
+  mail.send(email,code)
+  .then((data)=>{
+      res.send({err:0,msg:'获取验证码ok'},data)
+      // start=Date.now();
+      // console.log(start)
+      console.log(data)
   })
   .catch(()=>{
       res.send({err:-1,msg:'获取验证码失败'})

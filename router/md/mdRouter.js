@@ -26,7 +26,7 @@ router.post('/getMdByKw',(req,res)=>{
     mdModel.find({$or:[{type:{$regex:reg}},{salesman:{$regex:reg}}]})//模糊查询  //前端input框 按钮   通过按钮掉接口  //或者失去焦点触发Ajax请求 
     .then((data)=>{
         utils.log(data)
-      res.send({err:0,msg:'查询成功',data:data})
+      res.send({err:0,msg:'查询成功',data})
     })
     .catch((err)=>{
         utils.log(err)

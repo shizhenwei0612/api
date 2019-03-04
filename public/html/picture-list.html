@@ -194,17 +194,6 @@ function picture_add(title,url){
 	layer.full(index);
 }
 
-/*图片-查看*/
-function picture_show(title,url,id){
-	var index = layer.open({
-		type: 2,
-		title: title,
-		content: url
-	});
-	layer.full(index);
-}
-
-
 /*图片-编辑*/
 function picture_edit(title,url,id){
 	localStorage.setItem('_id',id)//将id放到localStorage之中目的是跨页面传参   key值 value值
@@ -215,7 +204,6 @@ function picture_edit(title,url,id){
 	});
 	layer.full(index);
 }
-
 /*图片-删除*/
 function picture_del(obj,id){
 	// alert(id)
